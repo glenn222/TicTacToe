@@ -22,6 +22,8 @@ namespace TicTacToe
 
         public void PrintTicTacToeBoard(string[,] TicTacToeBoard)
         {
+            Console.WriteLine("-------------------------");
+            Console.WriteLine("Current TicTacToeBoard:");
             for (int i = 0; i < TicTacToeBoard.GetLength(0); i++)
             {
                 for (int j = 0; j < TicTacToeBoard.GetLength(0); j++)

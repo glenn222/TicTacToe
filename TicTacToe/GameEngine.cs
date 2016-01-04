@@ -16,6 +16,7 @@ namespace TicTacToe
             var VerticalVictory = 0;
             var DiagonalVictory = 0;
 
+            // Horizontal Victory
             for (int i = 0; i < ticTacToeBoard.GetLength(0); i++)
             {
                 if (HorizontalVictory == 3)
@@ -30,6 +31,7 @@ namespace TicTacToe
                 }
             }
 
+            // Vertical Victory
             for (int i = 0; i < ticTacToeBoard.GetLength(0); i++)
             {
                 if (VerticalVictory == 3)
@@ -44,19 +46,21 @@ namespace TicTacToe
                 }
             }
 
+            // Diagonal Victory, check from upper left to lower right
             for (int i = 0; i < ticTacToeBoard.GetLength(0); i++)
             {
                 if (ticTacToeBoard[i, i].Equals(currentPlayer))
                     DiagonalVictory++;
             }
 
+            // Diagonal Victory check from lower left to upper right
             if (DiagonalVictory != 3)
             {
                 DiagonalVictory = 0;
                 for (int i = 0; i < ticTacToeBoard.GetLength(0); i++)
                 {
                     int pos = (ticTacToeBoard.GetLength(0) - 1) - i;
-                    if (ticTacToeBoard[i, pos].Equals(currentPlayer))
+                    if (ticTacToeBoard[pos, i].Equals(currentPlayer))
                         DiagonalVictory++;
                 }
             }

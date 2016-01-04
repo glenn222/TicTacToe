@@ -15,6 +15,7 @@ namespace TicTacToe
             GameEngine gameEngine = new GameEngine();
             GameVisualizer gameVisualizer = new GameVisualizer();
             GameManager gameManager = new GameManager(gameVisualizer, gameEngine);
+
             gameManager.StartGame(TicTacToeBoard);
 
 
