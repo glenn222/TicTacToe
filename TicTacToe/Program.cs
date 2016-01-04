@@ -13,7 +13,10 @@ namespace TicTacToe
             string[,] TicTacToeBoard = new string[3, 3];
 
             GameEngine gameEngine = new GameEngine();
-            gameEngine.StartGame(TicTacToeBoard);
+            GameVisualizer gameVisualizer = new GameVisualizer();
+            GameManager gameManager = new GameManager(gameVisualizer, gameEngine);
+            gameManager.StartGame(TicTacToeBoard);
+
 
         }
     }
