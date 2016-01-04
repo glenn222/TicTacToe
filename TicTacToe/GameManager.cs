@@ -12,10 +12,6 @@ namespace TicTacToe
         private readonly GameVisualizer _gameVisualizer;
         private readonly GameEngine _gameEngine;
 
-        // Use an interface to encourage polymorphism - ability of an object to take on many forms
-        private IPlayer player1;
-        private IPlayer player2;
-
         private readonly int _maxTurns = 9;
         private int turnNumber = 0;
 
@@ -28,42 +24,28 @@ namespace TicTacToe
         }
 
         //GameManager gives single responsibility to know how to play TicTacToe
-        public void StartGame(string[,] TicTacToeBoard)
+        public void PlayGame(string[,] TicTacToeBoard, IPlayer player1, IPlayer player2)
         {
             _gameVisualizer.InitializeBoard(TicTacToeBoard);
 
-            ChooseMode();
+            Console.WriteLine("Player 1, Do you want to be X or O?");
 
-            ChoosePlayer();
-
-            PlayGame(TicTacToeBoard);
-        }
-
-        private void ChooseMode()
-        {
             while (true)
             {
-                Console.WriteLine("Choose playing mode - 2 Players or Computer(AI)?");
-                var mode = Console.ReadLine().ToUpper();
+                var player1Name = Console.ReadLine().ToUpper();
 
-                // Polymorphism - Two objects are of the same type, but they can be interchangable and defined by the user
-                if (mode.Equals("2 PLAYERS"))
+                if (player1Name.ToUpper().Equals("X") || player1Name.ToUpper().Equals("O"))
                 {
-                    player1 = new RealPlayer();
-                    player2 = new RealPlayer();
-                    break;
-                }
-                else if (mode.Equals("AI"))
-                {
-                    player1 = new RealPlayer();
-                    player2 = new AIPlayer();
+                    // Set player names
+                    player1.SetPlayer(player1Name);
                     break;
                 }
             }
-        }
 
-        private void PlayGame(string[,] TicTacToeBoard)
-        {
+            player2.SetPlayer(player1.GetPlayer().ToUpper().Equals("X") ? "O" : "X");
+
+            Console.WriteLine("It is decided. Player 1 will be " + player1.GetPlayer() + ". Player 2 will be " + player2.GetPlayer() + "\n");
+
             var Winner = string.Empty;
             var currentPlayer = player1;
 
@@ -90,40 +72,14 @@ namespace TicTacToe
             Console.WriteLine("Restart Game? Y or N");
 
             string Ans = Console.ReadKey().Key.ToString();
-            if (Ans.Equals("Y")) RestartGame(TicTacToeBoard);
-
+            if (Ans.Equals("Y")) RestartGame(TicTacToeBoard, player1, player2);
         }
 
-        private void RestartGame(string[,] TicTacToeBoard)
+        private void RestartGame(string[,] TicTacToeBoard, IPlayer player1, IPlayer player2)
         {
             turnNumber = 0;
             _gameVisualizer.InitializeBoard(TicTacToeBoard);
-            PlayGame(TicTacToeBoard);
+            PlayGame(TicTacToeBoard, player1, player2);
         }
-
-        private void ChoosePlayer()
-        {
-            Console.WriteLine("Player 1, Do you want to be X or O?");
-
-            while (true)
-            {
-                var player1Name = Console.ReadLine().ToUpper();
-
-                if (player1Name.ToUpper().Equals("X") || player1Name.ToUpper().Equals("O"))
-                {
-                    // Set player names
-                    player1.SetPlayer(player1Name);
-                    break;
-                }
-            }
-
-            player2.SetPlayer(player1.GetPlayer().ToUpper().Equals("X") ? "O" : "X");
-
-            Console.WriteLine("It is decided. Player 1 will be " + player1.GetPlayer() + ". Player 2 will be " + player2.GetPlayer() + "\n");
-
-        }
-
-        
-
     }
 }
