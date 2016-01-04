@@ -23,6 +23,8 @@ namespace TicTacToe
                 {
                     if (TicTacToeBoard[i,j].Equals(" "))
                     {
+                        string position = i + "," + j;
+                        Console.WriteLine("AI placed a {0} at position ({1}):", player, position);
                         TicTacToeBoard[i, j] = player;
                         return;
                     }

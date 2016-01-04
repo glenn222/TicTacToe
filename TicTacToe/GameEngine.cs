@@ -67,6 +67,5 @@ namespace TicTacToe
 
             return HorizontalVictory == 3 || VerticalVictory == 3 || DiagonalVictory == 3 ? currentPlayer : string.Empty;
         }
-
     }
 }

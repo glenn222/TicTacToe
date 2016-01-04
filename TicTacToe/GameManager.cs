@@ -16,6 +16,9 @@ namespace TicTacToe
         private IPlayer player1;
         private IPlayer player2;
 
+        private readonly int _maxTurns = 9;
+        private int turnNumber = 0;
+
         // Inject our classes as "dependencies" in our constructors
         // Pass in class names in actual parameters (dependency injection)
         public GameManager(GameVisualizer argGameVisualizer, GameEngine argGameEngine)
@@ -68,10 +71,11 @@ namespace TicTacToe
             while (Winner.Equals(string.Empty))
             {
                 // The program has no idea who is playing, whether it is the real player or computer
-                player1.Play(TicTacToeBoard);
-                player2.Play(TicTacToeBoard);
-
+                currentPlayer.Play(TicTacToeBoard);
                 _gameVisualizer.PrintTicTacToeBoard(TicTacToeBoard);
+
+                turnNumber++;
+                if (turnNumber >= _maxTurns) break;
 
                 Winner = _gameEngine.CheckForVictory(TicTacToeBoard, currentPlayer.GetPlayer());
 
@@ -92,6 +96,7 @@ namespace TicTacToe
 
         private void RestartGame(string[,] TicTacToeBoard)
         {
+            turnNumber = 0;
             _gameVisualizer.InitializeBoard(TicTacToeBoard);
             PlayGame(TicTacToeBoard);
         }
