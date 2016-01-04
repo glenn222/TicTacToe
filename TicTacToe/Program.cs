@@ -16,7 +16,7 @@ namespace TicTacToe
             IPlayer player1;
             IPlayer player2;
 
-            GameEngine gameEngine = new GameEngine();
+            VictoryValidator gameEngine = new VictoryValidator();
             GameVisualizer gameVisualizer = new GameVisualizer();
             // Inject dependencies
             GameManager gameManager = new GameManager(gameVisualizer, gameEngine);

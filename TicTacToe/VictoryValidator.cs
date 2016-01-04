@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace TicTacToe
 {
-    class GameEngine
+    class VictoryValidator
     {
-        // The GameEngine knows the rules for TicTacToe
-        public string CheckForVictory(string[,] ticTacToeBoard, string currentPlayer)
+        // The VictoryValidator knows the rules for TicTacToe
+        public bool CheckForVictory(string[,] ticTacToeBoard, string currentPlayer)
         {
             // Check if current player is consecutively equal for either a horizontal, vertical, or diagonal line
             var HorizontalVictory = 0;
@@ -65,7 +65,7 @@ namespace TicTacToe
                 }
             }
 
-            return HorizontalVictory == 3 || VerticalVictory == 3 || DiagonalVictory == 3 ? currentPlayer : string.Empty;
+            return HorizontalVictory == 3 || VerticalVictory == 3 || DiagonalVictory == 3;
         }
     }
 }

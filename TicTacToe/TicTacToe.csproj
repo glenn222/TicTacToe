@@ -54,7 +54,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameEngine.cs" />
+    <Compile Include="VictoryValidator.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="GameVisualizer.cs" />
     <Compile Include="GameWindow.xaml.cs">

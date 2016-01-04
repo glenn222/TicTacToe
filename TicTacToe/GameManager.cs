@@ -10,17 +10,17 @@ namespace TicTacToe
     {
         // Use _ to distinguish private variables (if you want)
         private readonly GameVisualizer _gameVisualizer;
-        private readonly GameEngine _gameEngine;
+        private readonly VictoryValidator _victoryValidator;
 
         private readonly int _maxTurns = 9;
         private int turnNumber = 0;
 
         // Inject our classes as "dependencies" in our constructors
         // Pass in class names in actual parameters (dependency injection)
-        public GameManager(GameVisualizer argGameVisualizer, GameEngine argGameEngine)
+        public GameManager(GameVisualizer argGameVisualizer, VictoryValidator argVictoryValidator)
         {
             _gameVisualizer = argGameVisualizer;
-            _gameEngine = argGameEngine;
+            _victoryValidator = argVictoryValidator;
         }
 
         //GameManager gives single responsibility to know how to play TicTacToe
@@ -46,11 +46,11 @@ namespace TicTacToe
 
             Console.WriteLine("It is decided. Player 1 will be " + player1.GetPlayer() + ". Player 2 will be " + player2.GetPlayer() + "\n");
 
-            var Winner = string.Empty;
+            var Victory = false;
             var currentPlayer = player1;
 
             // Real Player specifying positions on the board
-            while (Winner.Equals(string.Empty))
+            while (Victory == false)
             {
                 // The program has no idea who is playing, whether it is the real player or computer
                 currentPlayer.Play(TicTacToeBoard);
@@ -59,15 +59,15 @@ namespace TicTacToe
                 turnNumber++;
                 if (turnNumber >= _maxTurns) break;
 
-                Winner = _gameEngine.CheckForVictory(TicTacToeBoard, currentPlayer.GetPlayer());
+                Victory = _victoryValidator.CheckForVictory(TicTacToeBoard, currentPlayer.GetPlayer());
 
                 currentPlayer = currentPlayer.Equals(player1) ? player2 : player1;
             }
 
-            if (Winner.Equals(string.Empty))
+            if (Victory == false)
                 Console.WriteLine("The game is a draw! Noone wins");
             else
-                Console.WriteLine("The Winner is {0}!", Winner);
+                Console.WriteLine("The Winner is {0}!", currentPlayer.GetPlayer());
 
             Console.WriteLine("Restart Game? Y or N");
 
