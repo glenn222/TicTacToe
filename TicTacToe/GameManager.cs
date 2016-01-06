@@ -11,9 +11,10 @@ namespace TicTacToe
         // Use _ to distinguish private variables (if you want)
         private readonly GameVisualizer _gameVisualizer;
         private readonly VictoryValidator _victoryValidator;
-
+        
         private readonly int _maxTurns = 9;
         private int turnNumber = 0;
+        Enumerations.PlayerEnum play = Enumerations.PlayerEnum.X;
 
         // Inject our classes as "dependencies" in our constructors
         // Pass in class names in actual parameters (dependency injection)
@@ -33,8 +34,8 @@ namespace TicTacToe
             while (true)
             {
                 var player1Name = Console.ReadLine().ToUpper();
-
-                if (player1Name.ToUpper().Equals("X") || player1Name.ToUpper().Equals("O"))
+                
+                if (Enumerations.PlayerEnum.X.ToString().Equals(player1Name) || Enumerations.PlayerEnum.O.ToString().Equals(player1Name))
                 {
                     // Set player names
                     player1.SetPlayer(player1Name);
@@ -42,7 +43,7 @@ namespace TicTacToe
                 }
             }
 
-            player2.SetPlayer(player1.GetPlayer().ToUpper().Equals("X") ? "O" : "X");
+            player2.SetPlayer(Enumerations.PlayerEnum.X.ToString().Equals(player1.GetPlayer()) ? Enumerations.PlayerEnum.O.ToString() : Enumerations.PlayerEnum.X.ToString());
 
             Console.WriteLine("It is decided. Player 1 will be " + player1.GetPlayer() + ". Player 2 will be " + player2.GetPlayer() + "\n");
 
@@ -58,10 +59,11 @@ namespace TicTacToe
 
                 turnNumber++;
                 if (turnNumber >= _maxTurns) break;
-
+                
                 Victory = _victoryValidator.CheckForVictory(TicTacToeBoard, currentPlayer.GetPlayer());
 
-                currentPlayer = currentPlayer.Equals(player1) ? player2 : player1;
+                if (Victory == false)
+                    currentPlayer = currentPlayer.Equals(player1) ? player2 : player1;
             }
 
             if (Victory == false)
@@ -77,8 +79,8 @@ namespace TicTacToe
 
         private void RestartGame(string[,] TicTacToeBoard, IPlayer player1, IPlayer player2)
         {
+            Console.Clear();
             turnNumber = 0;
-            _gameVisualizer.InitializeBoard(TicTacToeBoard);
             PlayGame(TicTacToeBoard, player1, player2);
         }
     }
